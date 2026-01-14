@@ -8,16 +8,28 @@ import os
 
 load_dotenv()
 
-PDF_PATH = Path(__file__).parent / "Bhagvat_gita.pdf"
-COLLECTION_NAME = "bhagavad_gita_ttd"
+# -------------------------
+# CONFIG
+# -------------------------
+PDF_PATH = Path(__file__).parent / "Bhagavad-Gita.pdf"
+COLLECTION_NAME = "bhagavad_gita_ttd1"
 
-print("📖 Loading Bhagavad Gita PDF...")
+if not PDF_PATH.exists():
+    raise RuntimeError(f"❌ PDF not found: {PDF_PATH}")
+
+print(f"📖 Loading Bhagavad Gita PDF: {PDF_PATH.name}")
+
+# -------------------------
+# Load PDF
+# -------------------------
 loader = PyPDFLoader(PDF_PATH)
 docs = loader.load()
 
 print(f"📄 Total pages loaded: {len(docs)}")
 
-# 🔹 Chunking strategy for commentary-heavy scripture
+# -------------------------
+# Chunking (optimized for scripture)
+# -------------------------
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=600,
     chunk_overlap=120
@@ -25,19 +37,24 @@ text_splitter = RecursiveCharacterTextSplitter(
 
 chunks = text_splitter.split_documents(docs)
 
-# Add clean metadata
+# Add metadata
 for chunk in chunks:
-    chunk.metadata["source"] = "Bhagavad Gita (TTD English)"
+    chunk.metadata["source"] = "Bhagavad Gita (English)"
     chunk.metadata["book"] = "Bhagavad Gita"
+    chunk.metadata["file"] = PDF_PATH.name
 
 print(f"✂️ Total chunks created: {len(chunks)}")
 
-# 🔹 Free & reliable embeddings
+# -------------------------
+# Embeddings
+# -------------------------
 embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
-# 🔹 Store in Qdrant
+# -------------------------
+# Store in Qdrant
+# -------------------------
 QdrantVectorStore.from_documents(
     documents=chunks,
     embedding=embedding_model,
@@ -46,4 +63,5 @@ QdrantVectorStore.from_documents(
     force_recreate=True
 )
 
-print("✅ Indexing completed successfully.")
+print("✅ Bhagavad Gita fully indexed into Qdrant.")
+print(f"📚 Collection: {COLLECTION_NAME}")
