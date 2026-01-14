@@ -106,15 +106,15 @@ rag/
 ├── requirements.txt
 └── README.md
 
-⚙️ Setup
+⚙️ Setup: 
 1️⃣ Create Environment
 python -m venv venv
 source venv/bin/activate
 
-2️⃣ Install Dependencies
+2️⃣ Install Dependencies:
 pip install -r requirements.txt
 
-3️⃣ Start Qdrant
+3️⃣ Start Qdrant:
 docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
 
 
@@ -122,17 +122,17 @@ Dashboard:
 
 http://localhost:6333/dashboard
 
-4️⃣ Add .env
+4️⃣ Add .env:
 GROQ_API_KEY=your_groq_key
 QDRANT_URL=http://localhost:6333
 
-5️⃣ Index the Gita
+5️⃣ Index the Gita:
 python index.py
 
-6️⃣ Start Backend
+6️⃣ Start Backend:
 python -m uvicorn backend:app --reload
 
-7️⃣ Start Chat UI
+7️⃣ Start Chat UI:
 streamlit run app.py
 
 
