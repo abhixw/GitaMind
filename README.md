@@ -1,174 +1,143 @@
-🕉️ Bhagavad Gita Assistant (RAG-Powered)
+🕉️ Bhagavad Gita RAG Chatbot
 
-A Retrieval-Augmented Generation (RAG) based AI assistant that delivers grounded, explainable, and source-cited guidance from the Bhagavad Gita (English – TTD edition).
+LangGraph-powered Conversational AI grounded in the Bhagavad Gita
 
-The system combines semantic search, LLM reasoning, and a themed, confidence-aware UI to present timeless wisdom for modern life — without hallucination.
+An intelligent chat-based AI assistant that provides accurate, grounded, and explainable answers from the Bhagavad Gita (English – TTD Edition) using:
 
-🌟 Key Features
-1️⃣ 🌅 Verse of the Day
+Retrieval-Augmented Generation (RAG)
 
-Displays a daily Bhagavad Gita teaching
+LangGraph conversational orchestration
 
-Deterministic: same verse for the entire day
+Long-term chat memory
 
-Fully retrieval-based (no random generation)
+Intent-aware routing
 
-Includes confidence score and source provenance
+All interactions happen through a single chat interface — just like ChatGPT — but every answer is faithful to the Bhagavad Gita.
 
-2️⃣ ❓ Question Answering
+🌟 What Makes This Unique
 
-Ask natural language questions such as:
+Unlike normal chatbots, this system:
 
-What is karma yoga?
+✔ Only answers from the Bhagavad Gita
+✔ Refuses to hallucinate
+✔ Tracks conversation context
+✔ Detects user intent
+✔ Routes requests through different AI pipelines
 
-What does the Gita say about duty?
+Everything happens automatically inside the chatbot.
 
-Highlights
+🧠 What the Agent Can Do
 
-Answers are strictly grounded in the Gita text
+The chatbot understands your intent and switches modes automatically:
 
-Includes:
+You say	The agent does
+“What is karma yoga?”	📖 RAG question answering
+“I feel anxious”	💭 Emotion-based guidance
+“I am a student”	🎓 Life-phase guidance
+“Give me today’s verse”	🌅 Daily verse
+“Give me another verse”	🎲 Random verse
+“Compare duty and desire”	⚖️ Dual-RAG comparison
 
-📊 Confidence score
+No buttons.
+No modes.
+Just natural conversation.
 
-📖 Page-level provenance
-
-Prevents hallucination through context-only answering
-
-3️⃣ 💭 Emotion-Based Guidance
-
-Select how you feel:
-
-😟 Anxious
-
-😠 Angry
-
-😕 Confused
-
-😔 Sad
-
-😌 Peace
-
-How it works
-
-Emotions are converted into semantic intent
-
-Relevant verses are retrieved from Qdrant
-
-The assistant provides reflective guidance grounded in scripture
-
-4️⃣ 🧭 Life Phase Guidance
-
-Contextual wisdom based on life stage:
-
-🎓 Student
-
-💼 Professional
-
-🧑‍💼 Leader
-
-🏠 Family Person
-
-Maps real-world responsibilities to Gita principles such as:
-
-Duty (Dharma)
-
-Detachment
-
-Selfless action (Karma Yoga)
-
-5️⃣ ⚖️ Wisdom Comparison Mode (Unique Feature)
-
-Compare two philosophical concepts side-by-side:
-
-Duty vs Desire
-
-Action vs Attachment
-
-Knowledge vs Devotion
-
-Why it’s special
-
-Uses the same RAG pipeline for both sides
-
-Shows confidence scores for each teaching
-
-Encourages critical thinking and reflection
-
-Rarely seen in student projects
-
-6️⃣ 🟢🟡🔴 Confidence-Aware Visual Feedback
-
-Each answer is visually styled based on confidence:
-
-🟢 High confidence – strong grounding
-
-🟡 Medium confidence – verify context
-
-🔴 Low confidence – limited textual support
-
-This improves trust, transparency, and explainability.
-
-7️⃣ 🌞🌙🕯️ Light / Dark / Meditation Mode
-
-A premium UI enhancement:
-
-🌞 Light Mode – traditional saffron theme
-
-🌙 Dark Mode – accessibility-friendly
-
-🕯️ Meditation Mode – distraction-free reflective UI
-
-No backend changes — purely UI-driven.
-
-🎨 Themed UI
-
-Krishna–Arjuna hero imagery
-
-Saffron-inspired spiritual palette
-
-Card-based layouts for clarity
-
-Clean, minimal, and calm design
-
-Optimized for reflection, not overload
-
-🧠 Architecture Overview
-User (Streamlit UI)
-        ↓
+🧬 System Architecture
+User → Streamlit Chat UI
+       ↓
 FastAPI Backend
-        ↓
-RAG Engine
-        ↓
-Qdrant Vector Database
-        ↓
-Bhagavad Gita (English – TTD PDF)
+       ↓
+LangGraph Agent
+       ↓
+Intent Router
+   ├─ RAG Question Engine
+   ├─ Emotion Engine
+   ├─ Life-Phase Engine
+   └─ Verse Engine
+       ↓
+Qdrant Vector DB (Bhagavad Gita)
+       ↓
+Groq LLM (LLaMA-3.1-8B)
 
 🛠️ Tech Stack
-🔧 Backend & AI
+AI & Backend
 
 Python
 
-FastAPI – API layer
+FastAPI
 
-LangChain – RAG orchestration
+LangChain
 
-Groq LLM – Fast inference for reasoning
+LangGraph
 
-HuggingFace Sentence Transformers – Text embeddings
+Groq LLM (LLaMA-3.1-8B)
 
-Qdrant – Vector database for semantic search
+HuggingFace Embeddings
 
-🎨 Frontend
+Qdrant Vector Database
 
-Streamlit – Interactive web UI
+Frontend
 
-Pillow – Image handling
+Streamlit
 
-📚 Data
+Chat UI
+
+Pillow (images)
+
+Knowledge Base
 
 Bhagavad Gita – English (TTD Edition)
 
-Chunked and embedded for semantic retrieval
+Chunked → Embedded → Stored in Qdrant
 
-Fully retrieval-based (no fine-tuning)
+📂 Project Structure
+rag/
+│
+├── assets/
+│   └── krishna_arjuna.jpeg
+│
+├── index.py
+├── rag_engine.py
+├── langgraph_agent.py
+├── backend.py
+├── app.py
+│
+├── .env
+├── requirements.txt
+└── README.md
+
+⚙️ Setup
+1️⃣ Create Environment
+python -m venv venv
+source venv/bin/activate
+
+2️⃣ Install Dependencies
+pip install -r requirements.txt
+
+3️⃣ Start Qdrant
+docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+
+
+Dashboard:
+
+http://localhost:6333/dashboard
+
+4️⃣ Add .env
+GROQ_API_KEY=your_groq_key
+QDRANT_URL=http://localhost:6333
+
+5️⃣ Index the Gita
+python index.py
+
+6️⃣ Start Backend
+python -m uvicorn backend:app --reload
+
+7️⃣ Start Chat UI
+streamlit run app.py
+
+
+
+👨‍💻 Author
+
+Abhinav Shrimali
+Building intelligent, explainable AI systems with RAG, LangGraph, and LLMs.
