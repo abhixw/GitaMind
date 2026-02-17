@@ -10,7 +10,7 @@ import tempfile
 
 load_dotenv()
 
-API_BASE = "http://127.0.0.1:8000"
+API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
