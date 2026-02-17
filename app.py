@@ -10,7 +10,7 @@ import tempfile
 
 load_dotenv()
 
-API_BASE = os.getenv("API_BASE", "http://127.0.0.1:8000")
+
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
@@ -165,17 +165,22 @@ if final_prompt:
     with st.chat_message("user"):
         st.markdown(final_prompt)
 
-    # Call backend
+    # Invoke Agent directly (Single Service Mode)
     try:
-        response = requests.post(
-            f"{API_BASE}/chat",
-            json={
-                "message": final_prompt,
-                "session_id": st.session_state.session_id
-            }
-        )
-        response.raise_for_status()
-        data = response.json()
+        from langgraph_agent import agent
+        
+        # Prepare state for agent
+        # The agent expects a dictionary with "messages"
+        input_state = {
+            "messages": st.session_state.messages
+        }
+        
+        # Invoke agent
+        result_state = agent.invoke(input_state)
+        
+        # Extract reply from agent output
+        # The 'reply' key in state contains the RAG response dict
+        data = result_state.get("reply", {})
 
         # -----------------------
         # Extract reply safely
@@ -205,4 +210,4 @@ if final_prompt:
                 st.audio(audio_file_path, format="audio/mp3", autoplay=True)
                 
     except Exception as e:
-        st.error(f"Backend error: {e}")
+        st.error(f"Agent error: {e}")
