@@ -13,7 +13,6 @@ charset-normalizer==3.4.4
 click==8.1.8
 dataclasses-json==0.6.7
 distro==1.9.0
-
 filelock==3.24.2
 frozenlist==1.8.0
 fsspec==2026.2.0
@@ -116,7 +115,6 @@ typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.3
 uuid_utils==0.14.0
-uvicorn==0.41.0
 xxhash==3.6.0
 yarl==1.22.0
 zstandard==0.25.0
