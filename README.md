@@ -106,7 +106,16 @@ rag/
 ├── requirements.txt
 └── README.md
 
-⚙️ Setup: 
+⚙️ Setup:Just natural conversation.
+ 
+ 🎙️ **Voice & Multilingual Support**
+ 
+ Now with meaningful voice interaction:
+ - **Speech-to-Text**: Talk to the bot using the "🕉️ Voice Chat" button (Powered by Groq Whisper).
+ - **Text-to-Speech**: The bot reads the answer back to you (Powered by gTTS).
+ - **Multilingual**: Supports **English, Hindi, Kannada, and Sanskrit**.
+ - **Vibrant UI**: A fresh new look with gradients and saffron themes.
+ 
 1️⃣ Create Environment
 python -m venv venv
 source venv/bin/activate

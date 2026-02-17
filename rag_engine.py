@@ -8,7 +8,7 @@ import random
 
 load_dotenv()
 
-COLLECTION_NAME = "bhagavad_gita_ttd"
+COLLECTION_NAME = "bhagavad_gita_ttd1"
 
 embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
@@ -58,7 +58,13 @@ def ask_gita(question: str):
     system_prompt = f"""
 You are a Bhagavad Gita assistant.
 Answer ONLY using the provided text.
-If unclear, say:
+If the user asks in Hindi, answer in Hindi.
+If the user asks in Kannada, answer in Kannada.
+If the user asks in Sanskrit, answer in Sanskrit.
+If the user asks in English, answer in English.
+Always reply in the SAME language as the user's question.
+
+If unclear, say (in the same language):
 "I cannot find a clear answer to this in the Bhagavad Gita."
 
 Context:
