@@ -16,6 +16,7 @@ embedding_model = HuggingFaceEmbeddings(
 
 vector_db = QdrantVectorStore.from_existing_collection(
     url=os.getenv("QDRANT_URL"),
+    api_key=os.getenv("QDRANT_API_KEY"),
     collection_name=COLLECTION_NAME,
     embedding=embedding_model,
 )
