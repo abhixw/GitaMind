@@ -4,13 +4,6 @@ A Voice-Enabled AI Chatbot grounded strictly in the Bhagavad Gita.
 
 This project implements a Retrieval-Augmented Generation (RAG) system that answers user questions using verses from the Bhagavad Gita. The assistant supports multilingual voice interaction and ensures responses are strictly based on indexed scripture content.
 
----
-
-## Application Preview
-
-<p align="center">
-  <img src="assets/app-preview.png" alt="Bhagavad Gita RAG Assistant UI" width="900"/>
-</p>
 
 ---
 
@@ -127,4 +120,4 @@ Provides:
 
 ---
 
-## Project Structure
+
