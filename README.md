@@ -1,178 +1,130 @@
-Bhagavad Gita RAG Assistant 🕉️
+# Bhagavad Gita RAG Assistant 🕉️
 
 A Voice-Enabled AI Chatbot grounded strictly in the Bhagavad Gita.
 
-This project is a Retrieval-Augmented Generation (RAG) based system that answers questions using verses from the Bhagavad Gita. It supports multilingual voice interaction and provides contextual, scripture-aligned responses.
+This project implements a Retrieval-Augmented Generation (RAG) system that answers user questions using verses from the Bhagavad Gita. The assistant supports multilingual voice interaction and ensures responses are strictly based on indexed scripture content.
 
-Overview
+---
+
+## Application Preview
+
+<p align="center">
+  <img src="assets/app-preview.png" alt="Bhagavad Gita RAG Assistant UI" width="900"/>
+</p>
+
+---
+
+## Overview
 
 The Bhagavad Gita RAG Assistant is designed to:
 
-Answer philosophical and practical life questions using authentic verses
+- Answer philosophical and practical life questions using authentic verses
+- Provide precise chapter and verse citations
+- Support multilingual voice input and output
+- Offer emotion-based guidance grounded in scripture
+- Deliver a daily verse for reflection
 
-Provide verse citations (Chapter and Verse)
+The system prevents hallucinated responses by restricting generation to retrieved Gita content.
 
-Support multilingual voice input and output
+---
 
-Offer emotional guidance grounded in scripture
+## Architecture
 
-Deliver a daily verse for reflection
+The application follows a structured RAG pipeline:
 
-The system ensures that responses are generated only from indexed Gita content rather than free-form hallucinated outputs.
+1. User Query (Text or Voice)
+2. Speech-to-Text using Whisper
+3. Embedding Generation
+4. Vector Search in Qdrant
+5. Context Retrieval (Relevant Verses)
+6. LLM Response Generation using LLaMA 3.1 (Groq API)
+7. Text-to-Speech Output using gTTS
 
-Architecture
+This architecture ensures that every answer is traceable to scripture.
 
-The system follows a Retrieval-Augmented Generation pipeline:
+---
 
-User Query (Text or Voice)
+## Core Features
 
-Speech-to-Text (Whisper)
+### 1. Scripture-Based Question Answering
 
-Embedding Generation
-
-Vector Search (Qdrant)
-
-Context Retrieval (Relevant Verses)
-
-LLM Response Generation (LLaMA 3.1 via Groq)
-
-Text-to-Speech Output (gTTS)
-
-This ensures scripture-grounded answers with citation support.
-
-Core Features
-1. Scripture-Based Question Answering
-
-Retrieves relevant verses from the Bhagavad Gita
-
-Generates contextual explanations
-
-Always provides chapter and verse references
+- Retrieves semantically relevant verses
+- Generates contextual explanations
+- Always includes chapter and verse references
 
 Example:
 
-"What does the Gita say about anger?"
-Returns relevant verses such as Chapter 2, Verse 62–63.
+> "What does the Gita say about anger?"  
+Returns verses such as Chapter 2, Verse 62–63.
 
-2. Voice Interaction
+---
 
-Speak your question using your microphone
+### 2. Voice Interaction
 
-Whisper converts speech to text
+- Users can speak queries directly
+- Whisper converts speech to text
+- Responses are converted back to speech using gTTS
+- Supports multilingual voice queries
 
-Response is spoken back using gTTS
+---
 
-Supports multilingual speech
+### 3. Multilingual Support
 
-3. Multilingual Support
+Supported languages:
 
-Supports:
+- English
+- Hindi
+- Kannada
+- Sanskrit
 
-English
+The assistant detects language context and generates responses accordingly.
 
-Hindi
+---
 
-Kannada
-
-Sanskrit
-
-The assistant detects language context and responds accordingly.
-
-4. Emotion-Based Guidance
+### 4. Emotion-Based Guidance
 
 Users can express emotional states such as:
 
-"I am confused"
+- "I am confused"
+- "I feel angry"
+- "I feel hopeless"
 
-"I feel angry"
+The system maps emotional intent to relevant verses and provides contextual interpretation.
 
-"I feel hopeless"
+---
 
-The assistant retrieves verses aligned with that emotional state and provides context-based interpretation.
+### 5. Verse of the Day
 
-5. Verse of the Day
+Provides:
 
-Random or curated daily verse
+- Sanskrit Shloka
+- Transliteration
+- Translation
+- Brief explanation
 
-Includes Sanskrit shloka
+---
 
-Transliteration
+## Tech Stack
 
-Translation
+### Frontend
+- Streamlit
 
-Brief explanation
+### LLM
+- LLaMA 3.1 via Groq API
 
-Tech Stack
+### Vector Database
+- Qdrant
 
-Frontend
+### Orchestration
+- LangGraph
 
-Streamlit
+### Voice Stack
+- Whisper (Speech-to-Text)
+- gTTS (Text-to-Speech)
 
-LLM
+### Embeddings
+- Compatible embedding model (e.g., OpenAI or Groq-supported model)
 
-LLaMA 3.1 via Groq API
+---
 
-Vector Database
-
-Qdrant
-
-Orchestration
-
-LangGraph
-
-Voice Stack
-
-Whisper (Speech-to-Text)
-
-gTTS (Text-to-Speech)
-
-Embeddings
-
-Compatible embedding model (e.g., OpenAI/Groq-supported embedding model)
-
-Project Structure (Suggested)
-Bhagavad-Gita-RAG/
-│
-├── app.py
-├── core/
-│   ├── rag_pipeline.py
-│   ├── retriever.py
-│   ├── voice.py
-│   ├── verse_of_day.py
-│   └── emotion_mapper.py
-│
-├── data/
-│   └── bhagavad_gita.json
-│
-├── requirements.txt
-├── .env
-└── README.md
-
-Setup Instructions
-1. Clone Repository
-git clone https://github.com/your-username/bhagavad-gita-rag.git
-cd bhagavad-gita-rag
-
-2. Create Virtual Environment
-python -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
-
-3. Install Dependencies
-pip install -r requirements.txt
-
-4. Configure Environment Variables
-
-Create a .env file:
-
-GROQ_API_KEY=your_groq_key
-QDRANT_URL=your_qdrant_url
-QDRANT_API_KEY=your_qdrant_key
-
-Running the App
-streamlit run app.py
-
-
-Default:
-
-http://localhost:8501
+## Project Structure
