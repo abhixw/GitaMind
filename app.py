@@ -165,22 +165,18 @@ if final_prompt:
     with st.chat_message("user"):
         st.markdown(final_prompt)
 
-    # Invoke Agent directly (Single Service Mode)
+    # Call FastAPI Backend
     try:
-        from langgraph_agent import agent
-        
-        # Prepare state for agent
-        # The agent expects a dictionary with "messages"
-        input_state = {
-            "messages": st.session_state.messages
-        }
-        
-        # Invoke agent
-        result_state = agent.invoke(input_state)
-        
-        # Extract reply from agent output
-        # The 'reply' key in state contains the RAG response dict
-        data = result_state.get("reply", {})
+        api_base = os.getenv("API_BASE", "http://127.0.0.1:8000")
+        response = requests.post(
+            f"{api_base}/chat",
+            json={"messages": st.session_state.messages}
+        )
+        if response.status_code == 200:
+            data = response.json()
+        else:
+            st.error(f"Backend error: {response.text}")
+            data = {}
 
         # -----------------------
         # Extract reply safely
