@@ -1,0 +1,17 @@
+# Virtual environment
+venv/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+**/.pytest_cache/
+
+# OS files
+.DS_Store
+
+# Qdrant local storage (if any)
+.qdrant/
+
+# Streamlit cache
+.streamlit/
