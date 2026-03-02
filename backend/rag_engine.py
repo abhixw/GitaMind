@@ -56,6 +56,7 @@ def ask_gita(question: str):
     avg_distance = sum(scores) / len(scores)
     confidence = max(0, min(round((1 - avg_distance) * 100, 2), 100))
 
+    joined_context = "\n\n".join(context)
     system_prompt = f"""
 You are a Bhagavad Gita assistant.
 Answer ONLY using the provided text.
@@ -73,7 +74,7 @@ CRITICAL: You MUST structure your answer.
 2. Then provide a concise explanation based strictly on those verses.
 
 Context:
-{"\n\n".join(context)}
+{joined_context}
 """
 
     response = llm.invoke([
