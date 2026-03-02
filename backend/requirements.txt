@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-streamlit
 langchain-groq
 langchain-qdrant
 langchain-huggingface
@@ -11,5 +10,3 @@ langgraph
 typing_extensions
 pypdf
 langchain-community
-groq
-gTTS

@@ -51,15 +51,18 @@ Every time the Planner triggers an execution node (like the Question or Emotion 
 - Whisper (Speech-to-Text via Groq)
 - gTTS (Text-to-Speech)
 
-
-
 ## ⚙️ Setup Instructions
 
 1️⃣ **Create Environment & Install Dependencies**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+
+# Install backend dependencies
+pip install -r backend/requirements.txt
+
+# Install frontend dependencies
+pip install -r frontend/requirements.txt
 ```
 
 2️⃣ **Start Qdrant Vector DB (Docker required)**
@@ -77,16 +80,20 @@ QDRANT_API_KEY=optional_qdrant_api_key_here
 
 4️⃣ **Index the Bhagavad Gita PDF**
 ```bash
+cd backend
 python index.py
+cd ..
 ```
 
-5️⃣ **Start the Agent Backend**
+5️⃣ **Start the Agent Backend (Terminal 1)**
 ```bash
-python -m uvicorn backend:app --reload
+cd backend
+python -m uvicorn backend:app --reload --port 8000
 ```
 
-6️⃣ **Start the Chat UI**
+6️⃣ **Start the Chat UI (Terminal 2)**
 ```bash
+cd frontend
 streamlit run app.py
 ```
 
