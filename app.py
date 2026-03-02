@@ -19,7 +19,7 @@ if "messages" not in st.session_state:
 # -----------------------
 st.set_page_config(page_title="Bhagavad Gita Assistant", page_icon="🕉️")
 
-st.image(Image.open("assets/krishna_arjuna.jpeg"), use_container_width=True)
+st.image(Image.open("images/krishna_arjuna.jpeg"), use_container_width=True)
 
 st.title("🕉️ Bhagavad Gita Chatbot")
 st.caption("LangGraph-powered • Grounded in Bhagavad Gita (TTD)")

@@ -61,6 +61,10 @@ Answer ONLY using the provided text.
 If unclear, say:
 "I cannot find a clear answer to this in the Bhagavad Gita."
 
+CRITICAL: You MUST structure your answer.
+1. List the relevant exact verses first, properly cited (e.g., Chapter X, Verse Y - "exact quote...").
+2. Then provide a concise explanation based strictly on those verses.
+
 Context:
 {"\n\n".join(context)}
 """

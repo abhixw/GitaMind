@@ -1,143 +1,81 @@
-🕉️ Bhagavad Gita RAG Chatbot
+🕉️ Bhagavad Gita Agentic Assistant
 
-LangGraph-powered Conversational AI grounded in the Bhagavad Gita
+A fully Agentic, LangGraph-powered Conversational AI grounded exclusively in the Bhagavad Gita (English – TTD Edition).
 
-An intelligent chat-based AI assistant that provides accurate, grounded, and explainable answers from the Bhagavad Gita (English – TTD Edition) using:
+![App Screenshot](./images/screenshot.png)
 
-Retrieval-Augmented Generation (RAG)
+This is not a traditional RAG chatbot. This system utilizes a multi-stage Agentic architecture featuring intent planning, dynamic multi-tool routing, and a strict reflection loop (Critic Node) to enforce precise verse citations and high-confidence grounding.
 
-LangGraph conversational orchestration
-
-Long-term chat memory
-
-Intent-aware routing
-
-All interactions happen through a single chat interface — just like ChatGPT — but every answer is faithful to the Bhagavad Gita.
-
-🌟 What Makes This Unique
-
-Unlike normal chatbots, this system:
-
-✔ Only answers from the Bhagavad Gita
-✔ Refuses to hallucinate
-✔ Tracks conversation context
-✔ Detects user intent
-✔ Routes requests through different AI pipelines
-
-Everything happens automatically inside the chatbot.
+🌟 What Makes This Agentic
+Unlike a normal RAG pipeline, this system features:
+✔ Planner Node: An LLM dynamically decides user intent (no keyword mapping).
+✔ Multi-Intent Handling: Routes complex queries through multiple tools sequentially.
+✔ Critic Node (Reflection): Evaluates the generated answers. If confidence is < 50% or if exact Chapter/Verse citations are missing, it actively rejects the answer and triggers a retry loop with a refined prompt to the Planner.
+✔ Guaranteed Grounding: Refuses to hallucinate. If no verses match after 2 retries, it gracefully admits it cannot find the answer.
 
 🧠 What the Agent Can Do
+The agent understands your intent and routes requests automatically:
+- "What is karma yoga?" → 📖 RAG question answering.
+- "I feel anxious" → 💭 Emotion-based search to find comforting verses.
+- "I am a student" → 🎓 Life-phase relevant guidance.
+- "Give me today’s verse and my duty" → 🔀 Multi-intent routing (Daily Verse + Question)
 
-The chatbot understands your intent and switches modes automatically:
+🧬 System Architecture (Agentic RAG)
 
-You say	The agent does
-“What is karma yoga?”	📖 RAG question answering
-“I feel anxious”	💭 Emotion-based guidance
-“I am a student”	🎓 Life-phase guidance
-“Give me today’s verse”	🌅 Daily verse
-“Give me another verse”	🎲 Random verse
-“Compare duty and desire”	⚖️ Dual-RAG comparison
+This assistant combines two powerful AI paradigms:
+**Agentic Layer (The Brain)**: Powered by LangGraph (`Planner Node`, `Intent Router`, `Critic Node`). It decides *what* needs to be done, plans the execution, and double-checks the final answer to ensure quality and strict citations.
+**RAG Layer (The Knowledge)**: Powered by Qdrant and LangChain (`rag_engine.py`). It retrieves grounded knowledge exclusively from the Bhagavad Gita.
 
-No buttons.
-No modes.
-Just natural conversation.
+Every time the Planner triggers an execution node (like the Question or Emotion node), it executes a strict RAG retrieval against the vector database to fetch the exact verses.
 
-🧬 System Architecture
-User → Streamlit Chat UI
-       ↓
-FastAPI Backend
-       ↓
-LangGraph Agent
-       ↓
-Intent Router
-   ├─ RAG Question Engine
-   ├─ Emotion Engine
-   ├─ Life-Phase Engine
-   └─ Verse Engine
-       ↓
-Qdrant Vector DB (Bhagavad Gita)
-       ↓
-Groq LLM (LLaMA-3.1-8B)
+![System Architecture](./images/architecture.png)
 
 🛠️ Tech Stack
-AI & Backend
+AI Core
+- Python
+- LangGraph (Agentic Orchestration)
+- LangChain
+- Groq LLM (LLaMA-3.1-8B)
+- HuggingFace Embeddings (sentence-transformers/all-MiniLM-L6-v2)
+- Qdrant Vector Database
 
-Python
-
-FastAPI
-
-LangChain
-
-LangGraph
-
-Groq LLM (LLaMA-3.1-8B)
-
-HuggingFace Embeddings
-
-Qdrant Vector Database
-
-Frontend
-
-Streamlit
-
-Chat UI
-
-Pillow (images)
-
-Knowledge Base
-
-Bhagavad Gita – English (TTD Edition)
-
-Chunked → Embedded → Stored in Qdrant
+Web Layers
+- FastAPI (Backend API)
+- Streamlit (Frontend UI)
 
 📂 Project Structure
-rag/
-│
-├── assets/
-│   └── krishna_arjuna.jpeg
-│
-├── index.py
-├── rag_engine.py
-├── langgraph_agent.py
-├── backend.py
-├── app.py
-│
-├── .env
+├── index.py              # PDF chunking and Qdrant ingestion
+├── rag_engine.py         # RAG logic, strict system prompts, and Qdrant client
+├── langgraph_agent.py    # The core LangGraph state machine (Planner, Router, Critic)
+├── backend.py            # FastAPI endpoints
+├── app.py                # Streamlit UI
 ├── requirements.txt
 └── README.md
 
-⚙️ Setup: 
-1️⃣ Create Environment
-python -m venv venv
-source venv/bin/activate
+⚙️ Setup Instructions
 
-2️⃣ Install Dependencies:
+1️⃣ Create Environment & Install Dependencies
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 
-3️⃣ Start Qdrant:
-docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+2️⃣ Start Qdrant Vector DB (Docker required)
+docker run -d -p 6333:6333 -p 6334:6334 qdrant/qdrant
 
-
-Dashboard:
-
-http://localhost:6333/dashboard
-
-4️⃣ Add .env:
-GROQ_API_KEY=your_groq_key
+3️⃣ Add Environment Variables (.env)
+Create a `.env` file in the root directory:
+GROQ_API_KEY=your_groq_key_here
 QDRANT_URL=http://localhost:6333
 
-5️⃣ Index the Gita:
+4️⃣ Index the Bhagavad Gita PDF
 python index.py
 
-6️⃣ Start Backend:
+5️⃣ Start the Agent Backend
 python -m uvicorn backend:app --reload
 
-7️⃣ Start Chat UI:
+6️⃣ Start the Chat UI
 streamlit run app.py
 
-
-
 👨‍💻 Author
-
 Abhinav Shrimali
-Building intelligent, explainable AI systems with RAG, LangGraph, and LLMs.
+Building intelligent, explainable AI systems with Agentic Frameworks, LangGraph, and LLMs.

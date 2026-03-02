@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+streamlit
+langchain-groq
+langchain-qdrant
+langchain-huggingface
+sentence-transformers
+qdrant-client
+python-dotenv
+langgraph
+typing_extensions
+pypdf
+langchain-community
