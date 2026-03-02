@@ -11,3 +11,5 @@ langgraph
 typing_extensions
 pypdf
 langchain-community
+groq
+gTTS

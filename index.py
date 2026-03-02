@@ -59,6 +59,7 @@ QdrantVectorStore.from_documents(
     documents=chunks,
     embedding=embedding_model,
     url=os.getenv("QDRANT_URL"),
+    api_key=os.getenv("QDRANT_API_KEY"),
     collection_name=COLLECTION_NAME,
     force_recreate=True
 )
