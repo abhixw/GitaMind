@@ -65,7 +65,7 @@ docker run -d -p 6333:6333 -p 6334:6334 qdrant/qdrant
 ```
 
 3️⃣ **Add Environment Variables (.env)**
-Create a `.env` file in the `backend` directory:
+Create a `.env` file in the root directory:
 ```env
 GROQ_API_KEY=your_groq_key_here
 QDRANT_URL=http://localhost:6333
