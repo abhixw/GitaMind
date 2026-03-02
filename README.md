@@ -1,4 +1,4 @@
-# Bhagavad Gita Agentic RAG Assistant 🕉️
+# GitaMind - Bhagavad Gita Agentic RAG Assistant 🕉️
 
 A fully Agentic, LangGraph-powered Conversational AI grounded exclusively in the Bhagavad Gita (English – TTD Edition).
 
