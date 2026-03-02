@@ -51,13 +51,7 @@ Every time the Planner triggers an execution node (like the Question or Emotion 
 - Whisper (Speech-to-Text via Groq)
 - gTTS (Text-to-Speech)
 
-## 📂 Project Structure
-├── index.py              # PDF chunking and Qdrant ingestion
-├── rag_engine.py         # RAG logic, strict system prompts, and Qdrant client
-├── langgraph_agent.py    # The core LangGraph state machine (Planner, Router, Critic)
-├── app.py                # Streamlit UI
-├── requirements.txt
-└── README.md
+
 
 ## ⚙️ Setup Instructions
 
