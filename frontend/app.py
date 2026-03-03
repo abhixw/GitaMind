@@ -167,7 +167,7 @@ if final_prompt:
 
     # Call FastAPI Backend
     try:
-        api_base = os.getenv("API_BASE", "http://127.0.0.1:8000")
+        api_base = os.getenv("API_BASE", "https://gitamind.onrender.com")
         response = requests.post(
             f"{api_base}/chat",
             json={"messages": st.session_state.messages}
