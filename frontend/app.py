@@ -193,10 +193,7 @@ if final_prompt:
         confidence = data.get("confidence", 0)
         formatted = f"{reply}\n\n🧠 Confidence: {confidence}%"
 
-        # Generate Audio Response
-        audio_file_path = text_to_speech(reply)
-
-        # Store + render assistant
+        # Store + render assistant immediately
         st.session_state.messages.append({
             "role": "assistant",
             "content": formatted
@@ -205,8 +202,12 @@ if final_prompt:
         with st.chat_message("assistant"):
             st.markdown(reply)
             st.caption(f"🧠 Confidence: {confidence}%")
+            
+            # Generate Audio Response AFTER text is visible
+            with st.spinner("Generating audio narration..."):
+                audio_file_path = text_to_speech(reply)
+                
             if audio_file_path:
                 st.audio(audio_file_path, format="audio/mp3", autoplay=True)
-                
     except Exception as e:
         st.error(f"Agent error: {e}")
