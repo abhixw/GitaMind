@@ -145,10 +145,18 @@ def random_verse_node(state: ChatState):
     return state
 
 def greeting_node(state: ChatState):
+    user_text = state["messages"][-1]["content"]
+    prompt = f"""You are GitaMind, an AI Bhagavad Gita Assistant.
+The user just said: "{user_text}"
+Respond warmly and concisely. If they shared their name, use it (e.g., "Namaste Abhinav..."). Tell them you are here to guide them using the wisdom of the Bhagavad Gita."""
+    
+    response = llm.invoke([{"role": "system", "content": prompt}])
+    
     res = {
-        "answer": "Namaste! 🙏 I am GitaMind, your AI Bhagavad Gita Assistant. How can I guide you today?",
+        "answer": response.content.strip(),
         "confidence": 100,
-        "provenance": []
+        "provenance": [],
+        "is_greeting": True
     }
     state["replies"] = state.get("replies", []) + [res]
     return state
@@ -162,7 +170,7 @@ def critic_node(state: ChatState):
     
     has_grounding = any(r.get("confidence", 0) > 50 for r in replies)
     has_citation = any("chapter" in r.get("answer", "").lower() and "verse" in r.get("answer", "").lower() for r in replies)
-    is_greeting = any("Namaste! 🙏 I am GitaMind" in r.get("answer", "") for r in replies)
+    is_greeting = any(r.get("is_greeting", False) for r in replies)
     
     # If no valid answers found or missing citations, and we haven't maxed out retries
     if not is_greeting and (not has_grounding or not has_citation) and retry_count < 2:
