@@ -44,6 +44,7 @@ Available intents:
 - life_phase
 - daily_verse
 - random_verse
+- greeting (for simple hellos, hi, what's your name, how are you)
 
 User message:
 "{user_text}"
@@ -102,7 +103,7 @@ def intent_router_node(state: ChatState):
 
 def route_intent(state: ChatState):
     intent = state.get("current_intent", "critic")
-    valid_intents = ["question", "emotion", "life_phase", "daily_verse", "random_verse"]
+    valid_intents = ["question", "emotion", "life_phase", "daily_verse", "random_verse", "greeting"]
     if intent in valid_intents:
         return intent
     return "critic"
@@ -143,6 +144,15 @@ def random_verse_node(state: ChatState):
     state["replies"] = state.get("replies", []) + [res]
     return state
 
+def greeting_node(state: ChatState):
+    res = {
+        "answer": "Namaste! 🙏 I am GitaMind, your AI Bhagavad Gita Assistant. How can I guide you today?",
+        "confidence": 100,
+        "provenance": []
+    }
+    state["replies"] = state.get("replies", []) + [res]
+    return state
+
 # -------------------------
 # Critic Node Phase 7 (Reflection Loop)
 # -------------------------
@@ -152,9 +162,10 @@ def critic_node(state: ChatState):
     
     has_grounding = any(r.get("confidence", 0) > 50 for r in replies)
     has_citation = any("chapter" in r.get("answer", "").lower() and "verse" in r.get("answer", "").lower() for r in replies)
+    is_greeting = any("Namaste! 🙏 I am GitaMind" in r.get("answer", "") for r in replies)
     
     # If no valid answers found or missing citations, and we haven't maxed out retries
-    if (not has_grounding or not has_citation) and retry_count < 2:
+    if not is_greeting and (not has_grounding or not has_citation) and retry_count < 2:
         state["retry_count"] = retry_count + 1
         state["run_retry"] = True
         return state
@@ -208,6 +219,7 @@ graph.add_node("emotion", emotion_node)
 graph.add_node("life_phase", life_phase_node)
 graph.add_node("daily_verse", daily_verse_node)
 graph.add_node("random_verse", random_verse_node)
+graph.add_node("greeting", greeting_node)
 graph.add_node("critic", critic_node)
 
 graph.set_entry_point("planner")
@@ -225,6 +237,7 @@ graph.add_conditional_edges(
         "life_phase": "life_phase",
         "daily_verse": "daily_verse",
         "random_verse": "random_verse",
+        "greeting": "greeting",
         "critic": "critic"
     }
 )
@@ -235,6 +248,7 @@ graph.add_edge("emotion", "intent_router")
 graph.add_edge("life_phase", "intent_router")
 graph.add_edge("daily_verse", "intent_router")
 graph.add_edge("random_verse", "intent_router")
+graph.add_edge("greeting", "intent_router")
 
 # Critic evaluates grounding and either ends or loops
 graph.add_conditional_edges(
