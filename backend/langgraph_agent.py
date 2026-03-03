@@ -148,7 +148,12 @@ def greeting_node(state: ChatState):
     user_text = state["messages"][-1]["content"]
     prompt = f"""You are GitaMind, an AI Bhagavad Gita Assistant.
 The user just said: "{user_text}"
-Respond warmly and concisely. If they shared their name, use it (e.g., "Namaste Abhinav..."). Tell them you are here to guide them using the wisdom of the Bhagavad Gita."""
+
+INSTRUCTIONS:
+1. Respond warmly and concisely in Maximum 1 or 2 sentences.
+2. If they shared their name, use it (e.g., "Namaste Abhinav...").
+3. Tell them you are here to guide them using the wisdom of the Bhagavad Gita.
+4. DO NOT generate, invent, or recite any verses. Do not hallucinate scriptures. Stop writing after your brief greeting. DO NOT repeat yourself."""
     
     response = llm.invoke([{"role": "system", "content": prompt}])
     
