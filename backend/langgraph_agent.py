@@ -3,7 +3,7 @@ from typing_extensions import TypedDict
 from typing import List, Dict, Any
 from langgraph.graph import StateGraph, START, END
 from langchain_groq import ChatGroq
-from rag_engine import (
+from .rag_engine import (
     ask_gita,
     ask_gita_by_emotion,
     ask_gita_by_life_phase,

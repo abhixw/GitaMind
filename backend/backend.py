@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Dict, Any
-from langgraph_agent import agent
+from .langgraph_agent import agent
 
 app = FastAPI(title="Bhagavad Gita Agentic API")
 
