@@ -2,7 +2,6 @@ fastapi
 uvicorn
 langchain-groq
 langchain-qdrant
-fastembed
 qdrant-client
 python-dotenv
 langgraph

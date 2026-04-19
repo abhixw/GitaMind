@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from langchain_qdrant import QdrantVectorStore
-from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 import os
 import datetime
@@ -10,7 +10,7 @@ load_dotenv()
 
 COLLECTION_NAME = "bhagavad_gita_ttd1"
 
-embedding_model = FastEmbedEmbeddings(
+embedding_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
